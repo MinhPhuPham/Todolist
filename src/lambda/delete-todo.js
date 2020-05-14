@@ -1,38 +1,30 @@
 'use strict';
 import moment from 'moment';
 
-import User from '../models/User';
+import Todo from '../models/Todo';
 
 module.exports = async (req, res, next) => {
   const { id } = req.params;
-  const { email } = req.user_token;
+  const { id: user_id } = req.user_token;
 
-  if (!content) {
-    return next('Missing parameter: content');
+  if (!id) {
+    return next('Missing parameter: id');
   }
 
-  const user = await User.findOne({ email });
-
-  let todo = user.todos.filter(todo => {
-    return todo.id == id;
-  });
-
-  const now = moment().unix();
-  await User.findOneAndUpdate({
-    email,
-  }, {
-    ...user,
-    todos: [
-      ...user.todos,
-      {
-        ...todo,
-        updated_at: now,
-        status: -1
+  await Todo.update(
+    {
+      created_by: user_id,
+      id
+    },
+    {
+      "$set": {
+        status: -1,
+        updated_at: moment().unix()
       }
-    ]
-  });
+    }
+  );
 
   return res.json({
     status: 'OK'
-  })
+  });
 };

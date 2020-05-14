@@ -34,8 +34,8 @@ app.post('/login', require('./lambda/user/login'));
 
 app.post('/todo', ensureLogged, require('./lambda/create-todo'));
 app.get('/todos', ensureLogged, require('./lambda/get-todos'));
-app.put('/todo/:id', ensureLogged, require('./lambda/update-todo'));
-app.delete('/todo/:id', ensureLogged, require('./lambda/delete-todo'));
+app.put('/todos/:id', ensureLogged, require('./lambda/update-todo'));
+app.delete('/todos/:id', ensureLogged, require('./lambda/delete-todo'));
 
 app.use(async (err, req, res, next) => {
   let error_code = err && err.message == 'Token is invalid' ? 4001 : undefined;
