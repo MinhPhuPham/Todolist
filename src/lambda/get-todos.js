@@ -1,15 +1,14 @@
 'use strict';
-import moment from 'moment';
 
-import User from '../models/User';
+import Todo from '../models/Todo';
 
 module.exports = async (req, res, next) => {
-  const { email } = req.user_token;
+  const { id } = req.user_token;
 
-  const user = await User.findOne({ email });
+  const todos = await Todo.find({ created_by: id });
 
   return res.json({
     status: 'OK',
-    data: user.todos
+    data: todos
   });
 };

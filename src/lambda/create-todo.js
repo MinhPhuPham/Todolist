@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
     { $inc: { sequence: 1 } },
     { new: true, upsert: true }
   );
-
+  
   let result = await Todo.insertMany([{
     id: counter.sequence,
     content,

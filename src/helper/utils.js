@@ -16,6 +16,7 @@ function generateJWT(user_token) {
   return jwt.sign(
     {
       user_id: user_token.email,
+      id: user_token.id,
       is_super_user: user_token.is_super_user,
       exp: parseInt(user_token.expired_at)
     },

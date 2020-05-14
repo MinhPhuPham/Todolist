@@ -25,7 +25,14 @@ module.exports = async (req, res, next) => {
   }
 
   const now = moment().unix();
-  const token = generateJWT({ email: user.email, id: user.id, is_super_user:user.is_super_user, expired_at: now + 30 * 3600 * 24});
+  const info = {
+    email: user.email,
+    id: user.id,
+    is_super_user: user.is_super_user,
+    expired_at: now + 14 * 3600 * 24
+  };
+  
+  const token = generateJWT(info);
 
   await User.updateOne({ email },
     {

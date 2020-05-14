@@ -1,5 +1,6 @@
 'use strict';
 
+import moment from 'moment';
 import passport from 'passport';
 import passportJWT from 'passport-jwt';
 import User from './models/User';
@@ -17,10 +18,15 @@ passport.use(new JwtStrategy(
     const user = await User.findOne({
       email: payload.user_id,
       status: true
-    })
+    });
+
+    if (payload.expired_at > moment().unix()) {
+      return next('token is expired');
+    }
 
     let user_token = {
       email: user.email,
+      id: user.id,
       is_super_user: user.is_super_user
     }
 
