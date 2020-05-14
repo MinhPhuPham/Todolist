@@ -13,7 +13,7 @@ module.exports = async (req, res, next) => {
   }
 
   if (!complete && !+complete) {
-    return next('Missing or missing paramter: complete');
+    return next('Missing or wrong paramter: complete');
   }
 
   const counter = await Counters.findOneAndUpdate(

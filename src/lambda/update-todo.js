@@ -14,6 +14,10 @@ module.exports = async (req, res, next) => {
     return next('Missing parameter: content');
   }
 
+  if (isNaN(id)) {
+    return next('Wrong parameter: id');
+  }
+
   let set = {
     '$set': {
       content,
@@ -27,7 +31,7 @@ module.exports = async (req, res, next) => {
 
 
   await Todo.update({
-    id,
+    id: +id,
     created_by: user_id
   },
   set);
