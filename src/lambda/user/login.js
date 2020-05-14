@@ -25,8 +25,8 @@ module.exports = async (req, res, next) => {
   }
 
   const now = moment().unix();
-  const token = generateJWT({ email: user.email, is_super_user:user.is_super_user, expired_at: now + 30 * 3600 * 24});
-  const { name } = user;
+  const token = generateJWT({ email: user.email, id: user.id, is_super_user:user.is_super_user, expired_at: now + 30 * 3600 * 24});
+
   await User.updateOne({ email },
     {
       "$set": {
