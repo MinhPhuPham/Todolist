@@ -26,6 +26,11 @@ module.exports = async (req, res, next) => {
     return next('Wrong email address');
   }
 
+  const user = await User.findOne({ email });
+  if (user) {
+    return next('User is existed');
+  }
+
   const { hash, salt } = generatePassword(password);
   const counter = await Counters.findOneAndUpdate(
     { _id: 'users'}, 
