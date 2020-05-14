@@ -4,8 +4,9 @@ import moment from 'moment';
 
 import { isValidEmail } from '../../helper/check-email';
 import { isValidUserInfo } from '../../helper/check-user-info';
-import User from '../../models/User';
 import { generatePassword } from '../../helper/utils'; 
+import User from '../../models/User';
+import Counters from '../../models/Counters';
 
 module.exports = async (req, res, next) => {
   const { 
@@ -26,9 +27,15 @@ module.exports = async (req, res, next) => {
   }
 
   const { hash, salt } = generatePassword(password);
+  const counter = await Counters.findOneAndUpdate(
+    { _id: 'users'}, 
+    { $inc: { sequence: 1 } },
+    { new: true, upsert: true }
+  );
 
   const now = moment().unix();
   await User.insertMany([{
+    id: counter.sequence,
     name,
     email,
     hash,

@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
+  id: { type: Number },
   name: { type: String, trim: true },
   email: { type: String, trim: true, unique: true, index: true },
   hash: { type: String, trim: true },
