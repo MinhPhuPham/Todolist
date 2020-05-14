@@ -9,7 +9,7 @@ const schema = new mongoose.Schema({
   created_by: { type: Number },
   created_at: { type: Number },
   updated_at: { type: Number },
-  completed_at: { type: Number }
+  complete: { type: Number }
 });
 
 module.exports = mongoose.model('Todo', schema, 'todos');
