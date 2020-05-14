@@ -27,16 +27,6 @@ app.use((req, res, next) => {
 
 const ensureLogged = passport.authenticate('jwt', { session: false });
 
-const ensureAdmin = async (req, res, next) => {
-  if (!req.user_token) {
-    return next(new Error('wrong token'));
-  }
-  if (!req.user_token.is_super_user) {
-    return next(new Error('Require Admin'));
-  }
-  next();
-};
-
 app.get('/', require('./lambda/status'));
 
 app.post('/register', require('./lambda/user/register'))

@@ -19,11 +19,11 @@ module.exports = async (req, res, next) => {
     return next(isValid.error);
   }
 
-  // isValid = await isValidEmail(email);
+  isValid = await isValidEmail(email);
 
-  // if (!isValid) {
-  //   return next('Wrong email address');
-  // }
+  if (!isValid) {
+    return next('Wrong email address');
+  }
 
   const { hash, salt } = generatePassword(password);
 
@@ -33,7 +33,6 @@ module.exports = async (req, res, next) => {
     email,
     hash,
     salt,
-    todo: [],
     created_at: now,
     updated_at: now
   }]);
