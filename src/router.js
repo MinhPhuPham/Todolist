@@ -52,7 +52,7 @@ app.use(async (err, req, res, next) => {
     reason: err.message ? err.message : err.toString(),
     error_code
   };
-  res.json(data);
+  return res.json(data);
 });
 
 module.exports = app;

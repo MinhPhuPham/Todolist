@@ -36,7 +36,7 @@ module.exports = async (req, res, next) => {
 
   await User.updateOne({ email },
     {
-      "$set": {
+      '$set': {
         token,
         updated_at: moment().unix()
       }
