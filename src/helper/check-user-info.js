@@ -2,7 +2,7 @@
 
 const Joi = require('@hapi/joi');
 
-function isValidUserInfo(email, password) {
+function isValidUserInfo(name, email, password) {
   const schema = Joi.object().keys({
     name:  Joi.string(),
     email: Joi.string()

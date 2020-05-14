@@ -8,18 +8,22 @@ import User from '../../models/User';
 import { generatePassword } from '../../helper/utils'; 
 
 module.exports = async (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { 
+    name = '',
+    email = '',
+    password = ''
+  } = req.body;
 
   let isValid = isValidUserInfo(name, email, password);
   if (isValid.error) {
     return next(isValid.error);
   }
 
-  isValid = await isValidEmail(email);
+  // isValid = await isValidEmail(email);
 
-  if (!isValid) {
-    return next('Wrong email address');
-  }
+  // if (!isValid) {
+  //   return next('Wrong email address');
+  // }
 
   const { hash, salt } = generatePassword(password);
 
@@ -31,8 +35,7 @@ module.exports = async (req, res, next) => {
     salt,
     todo: [],
     created_at: now,
-    updated_at: now,
-    tokens: []
+    updated_at: now
   }]);
 
   return res.json({

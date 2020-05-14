@@ -15,7 +15,7 @@ function validatePassword(password, user_salt, user_hash) {
 function generateJWT(user_token) {
   return jwt.sign(
     {
-      user_id: user_token.user_id,
+      user_id: user_token.email,
       is_super_user: user_token.is_super_user,
       exp: parseInt(user_token.expired_at)
     },
