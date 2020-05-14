@@ -10,20 +10,19 @@ module.exports = async (req, res, next) => {
   const { content, status } = req.body;
   const { id: user_id } = req.user_token;
 
-  if (!content) {
-    return next('Missing parameter: content');
-  }
-
   if (isNaN(id)) {
     return next('Wrong parameter: id');
   }
 
   let set = {
     '$set': {
-      content,
       updated_at: moment().unix()
     }
   };
+
+  if (content) {
+    set['$set'].content = content;
+  }
 
   if (!isNaN(status)) {
     set['$set'].status = status;
