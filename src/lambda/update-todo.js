@@ -38,7 +38,11 @@ module.exports = async (req, res, next) => {
   let data = await Todo.findOne({
     id,
     created_by: user_id
-  })
+  });
+
+  if (!data) {
+    next('todo is not existed');
+  }
 
   return res.json({
     status: 'OK',
