@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
     return next('Missing parameter: id');
   }
 
-  await Todo.update(
+  await Todo.updateOne(
     {
       created_by: user_id,
       id

@@ -7,7 +7,7 @@ import Todo from '../models/Todo';
 module.exports = async (req, res, next) => {
   const { id } = req.params;
 
-  const { content, status } = req.body;
+  const { content, status, complete } = req.body;
   const { id: user_id } = req.user_token;
 
   if (isNaN(id)) {
@@ -25,11 +25,20 @@ module.exports = async (req, res, next) => {
   }
 
   if (!isNaN(status)) {
+    if (status > 2 || status < -1) {
+      return next('Wrong parameter: status');
+    }
     set['$set'].status = status;
   }
 
+  if (!isNaN(complete)) {
+    if (complete < moment().unix()) {
+      return next('complete time have to greater than now');
+    }
+    set['$set'].complete = complete;
+  }
 
-  await Todo.update({
+  await Todo.updateOne({
     id: +id,
     created_by: user_id
   },
@@ -41,7 +50,7 @@ module.exports = async (req, res, next) => {
   });
 
   if (!data) {
-    next('todo is not existed');
+    return next('todo is not existed');
   }
 
   return res.json({
