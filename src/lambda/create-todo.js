@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
     return next('Missing parameter: content');
   }
 
-  if (!complete && !+complete) {
+  if (!complete && (complete < moment().unix())) {
     return next('Missing or wrong paramter: complete');
   }
 
