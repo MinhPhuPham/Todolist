@@ -5,7 +5,7 @@ import Todo from '../models/Todo';
 import Counters from '../models/Counters';
 
 module.exports = async (req, res, next) => {
-  const { content, complete } = req.body;
+  const { content, start_at, complete } = req.body;
   const { id } = req.user_token;
 
   if (!content) {
@@ -14,6 +14,9 @@ module.exports = async (req, res, next) => {
 
   if (!complete && (complete < moment().unix())) {
     return next('Missing or wrong paramter: complete');
+  }
+  if(!start_at){
+    return next('Missing or wrong paramter: start_at');
   }
 
   const counter = await Counters.findOneAndUpdate(
@@ -27,6 +30,7 @@ module.exports = async (req, res, next) => {
     content,
     created_by: id,
     created_at: moment().unix(),
+    start_at,
     complete
   }]);
 

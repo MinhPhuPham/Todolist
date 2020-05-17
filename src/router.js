@@ -34,6 +34,7 @@ app.post('/login', require('./lambda/user/login'));
 
 app.post('/todo', ensureLogged, require('./lambda/create-todo'));
 app.get('/todos', ensureLogged, require('./lambda/get-todos'));
+app.get('/profile', ensureLogged, require('./lambda/get-profile'));
 app.put('/todos/:id', ensureLogged, require('./lambda/update-todo'));
 app.delete('/todos/:id', ensureLogged, require('./lambda/delete-todo'));
 

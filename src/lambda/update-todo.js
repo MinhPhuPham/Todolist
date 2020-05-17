@@ -7,7 +7,7 @@ import Todo from '../models/Todo';
 module.exports = async (req, res, next) => {
   const { id } = req.params;
 
-  const { content, status, complete } = req.body;
+  const { content, status, start_at , complete } = req.body;
   const { id: user_id } = req.user_token;
 
   if (isNaN(id)) {
@@ -37,7 +37,11 @@ module.exports = async (req, res, next) => {
     }
     set['$set'].complete = complete;
   }
-
+  
+  if (!isNaN(start_at)) {
+    set['$set'].start_at = start_at;
+  }
+  
   await Todo.updateOne({
     id: +id,
     created_by: user_id

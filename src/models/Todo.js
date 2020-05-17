@@ -8,6 +8,7 @@ const schema = new mongoose.Schema({
   status: { type: Number, default: 0 },
   created_by: { type: Number },
   created_at: { type: Number },
+  start_at: { type: Number },
   updated_at: { type: Number },
   complete: { type: Number },
   updated_at: { type: Number }
